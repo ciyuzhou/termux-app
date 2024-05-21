@@ -42,7 +42,7 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
 
     private final TermuxActivity mActivity;
 
-    private static final int MAX_SESSIONS = 8;
+    private static final int MAX_SESSIONS = 9999;//定义最多打开会话窗口的数量
 
     private SoundPool mBellSoundPool;
 
@@ -365,10 +365,12 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
         TermuxService service = mActivity.getTermuxService();
         if (service == null) return;
 
+        /*原代码，限制终端打开会话窗口数量（8个）
         if (service.getTermuxSessionsSize() >= MAX_SESSIONS) {
             new AlertDialog.Builder(mActivity).setTitle(R.string.title_max_terminals_reached).setMessage(R.string.msg_max_terminals_reached)
                 .setPositiveButton(android.R.string.ok, null).show();
         } else {
+        */
             TerminalSession currentSession = mActivity.getCurrentSession();
 
             String workingDirectory;
@@ -385,7 +387,8 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
             setCurrentSession(newTerminalSession);
 
             mActivity.getDrawer().closeDrawers();
-        }
+
+        //注释结束}
     }
 
     public void setCurrentStoredSession() {
